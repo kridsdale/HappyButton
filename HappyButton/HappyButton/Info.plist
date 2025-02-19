@@ -2,9 +2,58 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
+    <key>CFBundleIdentifier</key>
+    <string></string>
+    <key>UISupportedExternalAccessoryProtocols</key>
+    <array>
+        <string></string>
+    </array>
+    <key>CFBundleExecutable</key>
+    <string></string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>UISupportedCarPlayApplicationCategories</key>
+    <array>
+        <string>MPCarPlayAudio</string>
+    </array>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>remote-notification</string>
+        <string>audio</string>
+        <string>external-accessory</string>
+        <string>processing</string>
+    </array>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>This app needs access to your music library to play songs through CarPlay.</string>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+        <key>UISceneConfigurations</key>
+        <dict>
+            <key>CPTemplateApplicationSceneSessionRoleApplication</key>
+            <array>
+                <dict>
+                    <key>UISceneClassName</key>
+                    <string>CPTemplateApplicationScene</string>
+                    <key>UISceneConfigurationName</key>
+                    <string>CarPlay</string>
+                    <key>UISceneDelegateClassName</key>
+                    <string>HappyButton.CarPlaySceneDelegate</string>
+                </dict>
+            </array>
+            <key>UIWindowSceneSessionRoleApplication</key>
+            <array>
+                <dict>
+                    <key>UISceneClassName</key>
+                    <string>UIWindowScene</string>
+                    <key>UISceneConfigurationName</key>
+                    <string>Phone</string>
+                    <key>UISceneDelegateClassName</key>
+                    <string>HappyButton.SceneDelegate</string>
+                </dict>
+            </array>
+        </dict>
+    </dict>
 </dict>
 </plist>

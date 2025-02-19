@@ -5,28 +5,51 @@
 //  Created by Kevin Ridsdale on 2/18/25.
 //
 
-import SwiftUI
+import CarPlay
 import SwiftData
+import SwiftUI
+import UIKit
+
+import AVFoundation
+import CarPlay
+import UIKit
 
 @main
-struct HappyButtonApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    var window: UIWindow?
 
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            print("Failed to set up audio session")
         }
-    }()
 
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
+        // Create and set the root view controller
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        let contentView = ContentView()
+        let hostingController = UIHostingController(rootView: contentView)
+        hostingController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        hostingController.view.frame = UIScreen.main.bounds
+
+        window?.rootViewController = hostingController
+        window?.makeKeyAndVisible()
+
+        return true
+    }
+
+    func application(_: UIApplication,
+                     configurationForConnecting connectingSceneSession: UISceneSession,
+                     options _: UIScene.ConnectionOptions) -> UISceneConfiguration
+    {
+        if connectingSceneSession.role == UISceneSession.Role.carTemplateApplication {
+            let config = UISceneConfiguration(name: "CarPlay Scene", sessionRole: connectingSceneSession.role)
+            config.delegateClass = CarPlaySceneDelegate.self
+            return config
         }
-        .modelContainer(sharedModelContainer)
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 }
